@@ -36,9 +36,11 @@ function takenPositions(){
     for(let i = 0;i < cell.length; i++) {
         if (cell[i].innerHTML == x) {
             takenByX.push(parseInt(cell[i].getAttribute('pos')));
+                checkForWin()
         } else {
             if (cell[i].innerHTML == o) {
                 takenByO.push(parseInt(cell[i].getAttribute('pos')));
+                checkForWin()
             }
         }
     }
@@ -53,5 +55,20 @@ function cellClick(){
     }
 }
 
+function checkForWin(){
+    for(let i = 0; i < winInd.length; i++) {
+        if(winInd[i].every(pos => takenByX.includes(pos))) {
+            stats.x += 1;
+            alert("X player won");
+            return;
+        } else if(winInd[i].every(pos => takenByO.includes(pos))) {
+            stats.o += 1;
+            alert("O player won");
+            return;
+        }else{
+            "This is draw"
+        }
+    }
+}
 
 

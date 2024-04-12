@@ -49,11 +49,15 @@ function takenPositions(){
 function cellClick(){
     if(!this.innerHTML){
         this.innerHTML = player;
-    }else{
-        alert("This cell is taken")
-        return
+        takenPositions();
+        player = player === 'X' ? 'O' : 'X';
+        currentPlayer.textContent = player;
+    } else {
+        alert("This cell is taken");
+        return;
     }
 }
+
 
 function checkForWin(){
     for(let i = 0; i < winInd.length; i++) {

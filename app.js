@@ -44,7 +44,14 @@ function takenPositions(){
     }
 }
 
-
+function cellClick(){
+    if(!this.innerHTML){
+        this.innerHTML = player;
+    }else{
+        alert("This cell is taken")
+        return
+    }
+}
 
 
 

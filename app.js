@@ -69,10 +69,10 @@ function checkForWin(){
             stats.o += 1;
             alert("O player won");
             return;
-        }else{
-            "This is draw"
         }
     }
+    stats.draw += 1;
+    alert("It's a draw");
 }
 
 

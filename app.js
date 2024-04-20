@@ -50,20 +50,31 @@ function takenPositions(){
 }
 
 function cellClick(){
+
     if(!this.innerHTML){
+
         this.innerHTML = player;
         takenPositions();
         player = player === 'X' ? 'O' : 'X';
         currentPlayer.textContent = player;
         checkForWin();
         moveCount++;
+        checkForDraw()
+
     } else {
         alert("This cell is taken");
         return;
     }
 }
 
-
+function checkForDraw() {
+    if(moveCount === 9){
+        alert("The game is a draw");
+        stats.d += 1;
+        updateStat();
+        restartGame();
+    }
+}
 function checkForWin(){
 
     let win = false;

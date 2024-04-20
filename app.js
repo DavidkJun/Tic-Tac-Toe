@@ -4,10 +4,12 @@ const currentPlayer = document.getElementById('curPlyr');
 
 let player = 'X';
 
+let moveCount = 0;
+
 let stats = {
     x: 0,
     o: 0,
-    draw: 0
+    d: 0
 }
 
 let data =[];
@@ -33,15 +35,16 @@ for (let i = 0; i < cell.length; i++) {
 }
 
 function takenPositions(){
+
     for(let i = 0;i < cell.length; i++) {
-        if (cell[i].innerHTML == x) {
+
+        if (cell[i].innerHTML == 'X') {
             takenByX.push(parseInt(cell[i].getAttribute('pos')));
-                checkForWin()
-        } else {
-            if (cell[i].innerHTML == o) {
-                takenByO.push(parseInt(cell[i].getAttribute('pos')));
-                checkForWin()
-            }
+
+
+        } else if (cell[i].innerHTML == 'O') {
+            takenByO.push(parseInt(cell[i].getAttribute('pos')));
+
         }
     }
 }
@@ -52,6 +55,8 @@ function cellClick(){
         takenPositions();
         player = player === 'X' ? 'O' : 'X';
         currentPlayer.textContent = player;
+        checkForWin();
+        moveCount++;
     } else {
         alert("This cell is taken");
         return;
@@ -60,19 +65,45 @@ function cellClick(){
 
 
 function checkForWin(){
+
+    let win = false;
+
     for(let i = 0; i < winInd.length; i++) {
         if(winInd[i].every(pos => takenByX.includes(pos))) {
-            stats.x += 1;
-            alert("X player won");
-            return;
+            setTimeout(() => {
+                alert("X player won");
+                stats.x += 1;
+                updateStat()
+                restartGame();
+            }, 100);
+            win = true;
+            break;
         } else if(winInd[i].every(pos => takenByO.includes(pos))) {
-            stats.o += 1;
-            alert("O player won");
-            return;
+            setTimeout(() => {
+                alert("O player won");
+                stats.o += 1;
+                updateStat()
+                restartGame();
+            }, 100);
+            win = true;
+            break;
         }
     }
-    stats.draw += 1;
-    alert("It's a draw");
 }
 
+function restartGame() {
+    for (let i = 0; i < cell.length; i++) {
+        cell[i].innerHTML = '';
+    }
+    takenByX = [];
+    takenByO = [];
+    player = 'X'; // Reset to default starting player
+    currentPlayer.textContent = player;
+    moveCount = 0; // Reset move count here
+}
 
+function updateStat() {
+    document.getElementById('sX').innerHTML = stats.x;
+    document.getElementById('sO').innerHTML = stats.o;
+    document.getElementById('sD').innerHTML = stats.d;
+}
